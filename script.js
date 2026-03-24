@@ -5,25 +5,23 @@
 (function () {
   'use strict';
 
-  // --- Elements ---
-  const navLinks = document.querySelectorAll('.nav-link');
-  const sections = document.querySelectorAll('.section');
-  const hamburger = document.getElementById('hamburger');
-  const mobileNav = document.getElementById('mobileNav');
-  const videoCards = document.querySelectorAll('.video-card');
+  var navLinks = document.querySelectorAll('.nav-link');
+  var sections = document.querySelectorAll('.section');
+  var hamburger = document.getElementById('hamburger');
+  var sideNav = document.getElementById('sideNav');
+  var videoCards = document.querySelectorAll('.video-card');
 
   // --- Active nav tracking via Intersection Observer ---
-  const observerOptions = {
+  var observerOptions = {
     root: null,
     rootMargin: '-20% 0px -60% 0px',
     threshold: 0
   };
 
-  const observer = new IntersectionObserver(function (entries) {
+  var observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
-        const id = entry.target.id;
-        setActiveNav(id);
+        setActiveNav(entry.target.id);
       }
     });
   }, observerOptions);
@@ -46,22 +44,20 @@
   navLinks.forEach(function (link) {
     link.addEventListener('click', function (e) {
       e.preventDefault();
-      const target = document.getElementById(this.getAttribute('data-section'));
+      var target = document.getElementById(this.getAttribute('data-section'));
       if (target) {
         target.scrollIntoView({ behavior: 'smooth' });
       }
-      // Close mobile nav if open
-      if (mobileNav && mobileNav.classList.contains('open')) {
+      if (sideNav && sideNav.classList.contains('open')) {
         closeMobileNav();
       }
     });
   });
 
-  // --- Mobile hamburger toggle ---
-  if (hamburger && mobileNav) {
+  // --- Hamburger toggle ---
+  if (hamburger && sideNav) {
     hamburger.addEventListener('click', function () {
-      const isOpen = mobileNav.classList.contains('open');
-      if (isOpen) {
+      if (sideNav.classList.contains('open')) {
         closeMobileNav();
       } else {
         openMobileNav();
@@ -70,32 +66,22 @@
   }
 
   function openMobileNav() {
-    mobileNav.style.display = 'block';
-    // Force reflow for transition
-    mobileNav.offsetHeight;
-    mobileNav.classList.add('open');
+    sideNav.classList.add('open');
     hamburger.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
 
   function closeMobileNav() {
-    mobileNav.classList.remove('open');
+    sideNav.classList.remove('open');
     hamburger.classList.remove('open');
     document.body.style.overflow = '';
-    setTimeout(function () {
-      if (!mobileNav.classList.contains('open')) {
-        mobileNav.style.display = 'none';
-      }
-    }, 300);
   }
 
   // --- Video cards: click to embed YouTube player ---
   videoCards.forEach(function (card) {
     card.addEventListener('click', function () {
-      const videoId = this.getAttribute('data-video-id');
-      const thumb = this.querySelector('.video-thumb');
-
-      // Don't re-embed if already playing
+      var videoId = this.getAttribute('data-video-id');
+      var thumb = this.querySelector('.video-thumb');
       if (thumb.querySelector('iframe')) return;
 
       var iframe = document.createElement('iframe');
@@ -104,7 +90,6 @@
       iframe.allowFullscreen = true;
       iframe.setAttribute('loading', 'lazy');
 
-      // Hide thumbnail image and play button
       var img = thumb.querySelector('.thumb-img');
       var playBtn = thumb.querySelector('.play-btn');
       if (img) img.style.display = 'none';
