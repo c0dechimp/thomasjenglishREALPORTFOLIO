@@ -3,6 +3,15 @@
    Bauhaus meets mid-century print culture
    ========================================================================== */
 
+/* --- Font Face: Noka Black --- */
+@font-face {
+  font-family: 'Noka';
+  src: url('fonts/Noka-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* --- Design Tokens --- */
 :root {
   --bg-primary: #1A1210;
@@ -13,7 +22,7 @@
   --text-muted: #C4946A;
   --rule-color: rgba(245, 240, 232, 0.15);
 
-  --font-display: 'Bebas Neue', 'Arial Black', 'Helvetica Neue', sans-serif;
+  --font-display: 'Noka', 'Arial Black', 'Helvetica Neue', sans-serif;
   --font-headline: 'Playfair Display', Georgia, serif;
   --font-body: 'Source Serif 4', 'Georgia', serif;
   --font-meta: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
